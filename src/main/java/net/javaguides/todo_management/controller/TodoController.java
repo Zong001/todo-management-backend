@@ -42,7 +42,7 @@ public class TodoController {
     }
 
     //Build Get All Todos Rest API
-
+    @GetMapping
     public ResponseEntity<List<TodoDto>> getAllTodos() {
         List<TodoDto> todoDtos = todoService.getAllTodos();
         return ResponseEntity.ok(todoDtos);
