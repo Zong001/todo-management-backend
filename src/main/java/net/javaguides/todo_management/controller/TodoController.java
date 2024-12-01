@@ -27,6 +27,7 @@ public class TodoController {
         response.put("message", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
     //Build Add Todo REST API
     @PostMapping
     public ResponseEntity<TodoDto> addTodo(@RequestBody TodoDto todoDto) {
@@ -38,7 +39,7 @@ public class TodoController {
     @GetMapping("{id}")
     public ResponseEntity<TodoDto> getTodo(@PathVariable("id") Long todoId) {
         TodoDto todoDto = todoService.getTodo(todoId);
-        return new ResponseEntity<>(todoDto,HttpStatus.OK);
+        return new ResponseEntity<>(todoDto, HttpStatus.OK);
     }
 
     //Build Get All Todos Rest API
@@ -46,5 +47,12 @@ public class TodoController {
     public ResponseEntity<List<TodoDto>> getAllTodos() {
         List<TodoDto> todoDtos = todoService.getAllTodos();
         return ResponseEntity.ok(todoDtos);
+    }
+
+    //Build Update Todo Rest API
+    @PutMapping("{id}")
+    public ResponseEntity<TodoDto> updateTodo(@RequestBody TodoDto todoDto, @PathVariable ("id") Long todoId) {
+        TodoDto updatedTodo = todoService.updateTodo(todoId, todoDto);
+        return ResponseEntity.ok(updatedTodo);
     }
 }
