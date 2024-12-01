@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,5 +39,12 @@ public class TodoController {
     public ResponseEntity<TodoDto> getTodo(@PathVariable("id") Long todoId) {
         TodoDto todoDto = todoService.getTodo(todoId);
         return new ResponseEntity<>(todoDto,HttpStatus.OK);
+    }
+
+    //Build Get All Todos Rest API
+
+    public ResponseEntity<List<TodoDto>> getAllTodos() {
+        List<TodoDto> todoDtos = todoService.getAllTodos();
+        return ResponseEntity.ok(todoDtos);
     }
 }
