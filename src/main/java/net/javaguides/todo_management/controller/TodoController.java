@@ -17,6 +17,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class TodoController {
     private TodoService todoService;
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleResourceNotFoundException(ResourceNotFoundException ex) {
         Map<String, Object> response = new HashMap<>();
