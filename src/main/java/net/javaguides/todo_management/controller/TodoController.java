@@ -55,4 +55,12 @@ public class TodoController {
         TodoDto updatedTodo = todoService.updateTodo(todoId, todoDto);
         return ResponseEntity.ok(updatedTodo);
     }
+
+    //Build Delete Todo Rest API
+    @DeleteMapping("{id}")
+    public  ResponseEntity<String> deleteTodo(@PathVariable("id") Long todoId) {
+        todoService.deleteTodo(todoId);
+        return ResponseEntity.ok("Todo deleted successfully! ");
+    }
+
 }
