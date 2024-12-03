@@ -16,4 +16,7 @@ public class TodoManagementApplication {
 		SpringApplication.run(TodoManagementApplication.class, args);
 	}
 
+//	http://localhost:8080/login?logout
+
+
 }
