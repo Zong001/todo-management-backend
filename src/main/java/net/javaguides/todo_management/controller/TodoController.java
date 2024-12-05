@@ -6,6 +6,7 @@ import net.javaguides.todo_management.exception.ResourceNotFoundException;
 import net.javaguides.todo_management.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ public class TodoController {
     }
 
     //Build Add Todo REST API
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<TodoDto> addTodo(@RequestBody TodoDto todoDto) {
         TodoDto savedTodo = todoService.addTodo(todoDto);
@@ -37,6 +39,7 @@ public class TodoController {
     }
 
     //Build Get Todo Rest API
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("{id}")
     public ResponseEntity<TodoDto> getTodo(@PathVariable("id") Long todoId) {
         TodoDto todoDto = todoService.getTodo(todoId);
@@ -44,6 +47,7 @@ public class TodoController {
     }
 
     //Build Get All Todos Rest API
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping
     public ResponseEntity<List<TodoDto>> getAllTodos() {
         List<TodoDto> todoDtos = todoService.getAllTodos();
@@ -51,20 +55,23 @@ public class TodoController {
     }
 
     //Build Update Todo Rest API
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
-    public ResponseEntity<TodoDto> updateTodo(@RequestBody TodoDto todoDto, @PathVariable ("id") Long todoId) {
+    public ResponseEntity<TodoDto> updateTodo(@RequestBody TodoDto todoDto, @PathVariable("id") Long todoId) {
         TodoDto updatedTodo = todoService.updateTodo(todoId, todoDto);
         return ResponseEntity.ok(updatedTodo);
     }
 
     //Build Delete Todo Rest API
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
-    public  ResponseEntity<String> deleteTodo(@PathVariable("id") Long todoId) {
+    public ResponseEntity<String> deleteTodo(@PathVariable("id") Long todoId) {
         todoService.deleteTodo(todoId);
         return ResponseEntity.ok("Todo deleted successfully! ");
     }
 
     //Build Complete Todo Rest api
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("{id}/complete")
     public ResponseEntity<TodoDto> completeTodo(@PathVariable("id") Long todoId) {
         TodoDto updatedTodo = todoService.completeTodo(todoId);
@@ -72,6 +79,7 @@ public class TodoController {
     }
 
     //Build InComplete Todo Rest api
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("{id}/in-complete")
     public ResponseEntity<TodoDto> inCompleteTodo(@PathVariable("id") Long todoId) {
         TodoDto updatedTodo = todoService.inCompleteTodo(todoId);
